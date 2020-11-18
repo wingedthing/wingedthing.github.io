@@ -2,6 +2,7 @@ h1 {
   text-align: center;
   margin: 0px auto;
   display: block;
+  position: relative;
 }
 
 #input {
@@ -9,7 +10,10 @@ h1 {
 }
 
 body {
+  position: relative;
   background-color: rgb(190, 178, 137);
+  transform: scale(2);
+  top: 100px;
 }
 
 #values {
