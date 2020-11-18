@@ -1,0 +1,43 @@
+h1 {
+  text-align: center;
+  margin: 0px auto;
+  display: block;
+}
+
+#input {
+  text-align: center;
+}
+
+body {
+  background-color: rgb(190, 178, 137);
+}
+
+#values {
+  position: absolute;
+  left: 50%;
+  width: 2000px;
+  margin-left: -1000px;
+  font-size: 20px;
+  
+  
+}
+
+.row {
+  text-align: center;
+  padding: 20px;
+}
+.block {
+  display: inline-block;
+}
+
+#b1{
+  position: relative;
+  right: 320px;
+  font-size: 12px;
+  top: 50px;
+}
+
+#b2 {
+  position: relative;
+  right: 225px;
+}
