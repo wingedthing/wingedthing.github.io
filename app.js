@@ -6,7 +6,6 @@ $(function(){
   });
 });
 
-
 function toIeee754(number) {
   let signBit = '0';
   let numStringArr = number.toString().split('.');
@@ -17,24 +16,29 @@ function toIeee754(number) {
     signBit = '1';
     integral.shift();
   }
-integral = integral.join('');
-let significand = getSignificand(fractional, integral);
-let bias64 = 1023;
-let exponent  = toIntegralBinary(integral).length - 1;
-let exponentField = toIntegralBinary(exponent + bias64).join('');
+  
+  integral = integral.join('');
+  let significand = getSignificand(fractional, integral);
+  let bias64 = 1023;
+  let exponent  = toIntegralBinary(integral).length - 1;
+  let exponentField = toIntegralBinary(exponent + bias64).join('');
+  
+  if(exponent == 0) {
+    exponentField = '0' + exponentField;
+  }
 
-return `${signBit} ${exponentField} ${significand}`;
-
- 
+  return `${signBit} ${exponentField} ${significand}`;
 }
 
 function toIntegralBinary(possitiveInt) {
   let binary = [];
   let product = possitiveInt;
+  
   while(product) {
     binary.unshift(product % 2);
     product = Math.floor(product / 2);
   }
+  
   return binary;
 }
 
@@ -43,8 +47,10 @@ function getSignificand(fracPartOfNum, integral) {
   let loopLength = 52 - sigNum.length;
   let product = fracPartOfNum;
   let binaryFrac = [];
+  
   for(let i = 0; i < loopLength; i++) {
     product = product * 2;
+    
     if(product > 1){
       binaryFrac.push(1);
       product -= 1;
@@ -54,7 +60,9 @@ function getSignificand(fracPartOfNum, integral) {
     }else {
       binaryFrac.push(0);
     } 
+    
   }
+  
   return sigNum.join('') + binaryFrac.join('');
 }
  
