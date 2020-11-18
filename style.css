@@ -1,47 +1,82 @@
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  background-color: rgb(190, 178, 137);
+  
+}
+
 h1 {
   text-align: center;
   margin: 0px auto;
   display: block;
   position: relative;
+  font-size: 72px;
 }
 
 #input {
   text-align: center;
+  font-size: 40px;
 }
 
-body {
+.submissionField {
+  width: 350px; 
+  height: 50px; 
+  border: 1px solid #999999; 
+  padding: 5px;
+  font-size: 40px;
+  font-family: "monospace";
+}
+
+.submissionButton {
+  height: 50px;
+  width: 150px;
+  padding: 5px;
+  border: 1px solid #999999;
   position: relative;
-  background-color: rgb(190, 178, 137);
-  transform: scale(2);
-  top: 100px;
+  bottom: 3px;
+  font-size: 28px;
 }
 
 #values {
-  position: absolute;
-  left: 50%;
-  width: 2000px;
-  margin-left: -1000px;
-  font-size: 20px;
-  
-  
+  text-align: center;
+  font-size: 40px;
+  position: relative;
 }
 
 .row {
   text-align: center;
   padding: 20px;
 }
+
 .block {
   display: inline-block;
 }
 
 #b1{
   position: relative;
-  right: 320px;
-  font-size: 12px;
-  top: 50px;
+  right: 635px;
+  font-size: 25px;
+  top: 20px;
+  color: rgb(148, 20, 20);
+}
+
+#b3 {
+  color: rgb(5, 85, 5) ;
 }
 
 #b2 {
   position: relative;
-  right: 225px;
+  right: 430px;
+  color: rgb(9, 9, 209);
+}
+
+.links {
+  text-align: center;
+  position: relative;
+  top: 75px;
+  font-size: 32px;
 }
