@@ -1,85 +1,69 @@
-const app = () => {
-  const song = document.querySelector(".song");
-  const play = document.querySelector(".play");
-  const outline = document.querySelector(".moving-outline circle");
-  const video = document.querySelector(".vid-container video");
-
-  //Sounds
-  const sounds = document.querySelectorAll(".sound-picker button");
-  //Time Display
-  const timeDisplay = document.querySelector(".time-display");
-  const timeSelect = document.querySelectorAll('.time-select button')
-  // Get the Length of the outline
-  const outlineLength = outline.getTotalLength();
-  //Duration
-  let fakeDuration = 600;
-
-  outline.style.strokeDasharray = outlineLength;
-  outline.style.strokeDashoffset = outlineLength;
-
-//Pick Different sounds
-sounds.forEach(sound => {
-  sound.addEventListener('click', function(){
-    song.src = this.getAttribute('data-sound');
-    video.src = this.getAttribute('data-video');
-    checkPlaying(song);
-  })
-})
-
-//play sound
-  play.addEventListener("click", () => {
-    checkPlaying(song);
-  });
-
-
-//Select sound
-timeSelect.forEach(option =>{
-  option.addEventListener('click', function(){
-    fakeDuration = this.getAttribute("data-time");
-    //timeDisplay.textContent = `${Math.floor(fakeDuration / 60)}:${Math.floor(fakeDuration % 60)}`;
-    let seconds = Math.floor(fakeDuration % 60);
-    let minutes = Math.floor(fakeDuration / 60);
-    const remainderSeconds = seconds % 60;
-      timeDisplay.textContent = `${minutes}:${
-        remainderSeconds < 10 ? '0' : ''
-      }${remainderSeconds}`;
-    
+$(function(){
+  $("#submit").on('click', function(){
+    let $myform = $('#myform :input');
+    let myvalue = $myform.val();
+    $('#values').html(toIeee754(myvalue));
   });
 });
 
-  // create a fuction to stop and play sounds
-  const checkPlaying = song =>{
-    if(song.paused) {
-      song.play();
-      video.play();
-      play.src = "./svg/pause.svg";
-    }else {
-      song.pause();
-      video.pause();
-      play.src = "./svg/play.svg";
-    }
-  };
-
-  //Animate the circle
-  song.ontimeupdate = () => {
-    let currentTime = song.currentTime;
-    let elapsed = fakeDuration - currentTime;
-    let seconds = Math.floor(elapsed % 60);
-    let minutes = Math.floor(elapsed / 60);
-
-    //Animate the circle
-    let progress = outlineLength - (currentTime / fakeDuration) * outlineLength;
-    outline.style.strokeDashoffset = progress;
-    //Animate the text
-    timeDisplay.textContent = `${minutes}:${seconds}`;
-
-    if(currentTime >= fakeDuration) {
-      song.pause();
-      song.currentTime = 0;
-      play.src = './svg/play.svg';
-      video.pause();
-    }
+function toIeee754(number) {
+  let signBit = '0';
+  let numStringArr = number.toString().split('.');
+  let integral = numStringArr[0].split('');
+  let fractional = '.' + numStringArr[1];
+  
+  if (integral[0] === '-'  ) {
+    signBit = '1';
+    integral.shift();
   }
-};
+  
+  integral = integral.join('');
+  let significand = getSignificand(fractional, integral);
+  let bias64 = 1023;
+  let exponent  = toIntegralBinary(integral).length - 1;
+  let exponentField = toIntegralBinary(exponent + bias64).join('');
+  
+  if(exponent == 0) {
+    exponentField = '0' + exponentField;
+  }
 
-app();
+  return `${signBit} ${exponentField} ${significand}`;
+}
+
+function toIntegralBinary(possitiveInt) {
+  let binary = [];
+  let product = possitiveInt;
+  
+  while(product) {
+    binary.unshift(product % 2);
+    product = Math.floor(product / 2);
+  }
+  
+  return binary;
+}
+
+function getSignificand(fracPartOfNum, integral) {
+  let sigNum = toIntegralBinary(integral).slice(1);
+  let loopLength = 52 - sigNum.length;
+  let product = fracPartOfNum;
+  let binaryFrac = [];
+  
+  for(let i = 0; i < loopLength; i++) {
+    product = product * 2;
+    
+    if(product > 1){
+      binaryFrac.push(1);
+      product -= 1;
+    }else if(product == 1) {
+      product = 0;
+      binaryFrac.push(1);
+    }else {
+      binaryFrac.push(0);
+    } 
+    
+  }
+  
+  return sigNum.join('') + binaryFrac.join('');
+}
+ 
+
