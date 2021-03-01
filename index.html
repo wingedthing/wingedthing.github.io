@@ -14,16 +14,18 @@
     <div id="input">
       <p>Enter double value to be converted</p>
       
-        <form id="myform" action="" method="">
+        <form id="myform" action="" method="" onsubmit="return false">
           <input class="submissionField" type="text" name="double" />
-          <input class="submissionButton" type="button" name="submit" id="submit" value="Submit" />
+          <input class="submissionButton" type="submit" name="submit" id="submit" value="Submit" />
         </form>
         <div class="row">
-          <div class="block" id="b2">Exponent</div>
-          <div class="block" id="b3">Mantissa</div>
+          <div class="block" id="exp">Exponent</div>
+          <div class="block" id="man">Mantissa</div>
+          <div id="values">0 00000000000 0000000000000000000000000000000000000000000000000000</div>
+          <div class="block2" id="sign">Sign</div>
         </div>
-        <div id="values">0 00000000000 0000000000000000000000000000000000000000000000000000</div>
-        <div class="block2" id="b1">Sign</div>
+        
+        
       </div>
       <div class="links">
           <a href="https://en.wikipedia.org/wiki/Double-precision_floating-point_format" target="_blank">IEEE 754 double-precision binary floating-point format: binary64</a>

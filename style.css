@@ -6,6 +6,10 @@ body {
   height: 100%;
   box-sizing: border-box;
   background-color: rgb(190, 178, 137);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   
 }
 
@@ -43,35 +47,47 @@ h1 {
 
 #values {
   text-align: center;
-  font-size: 40px;
-  position: relative;
+  font-size: 2.3rem;
+  grid-area: values;
 }
 
 .row {
   text-align: center;
   padding: 20px;
+  display: grid;
+  grid-template-rows: 20% 60% 20%;
+  grid-template-columns:5% 5% 20% 70%;
+  width: 90vw;
+  justify-content: center;
+  align-items: center;
+  grid-template-areas:
+    ". . exp man"
+    "values values values values"
+    ". sign . .";
 }
 
 .block {
   display: inline-block;
 }
 
-#b1{
-  position: relative;
-  right: 635px;
+#sign{
   font-size: 25px;
-  top: 20px;
   color: rgb(148, 20, 20);
+  grid-area: sign;
+  justify-self: start;
 }
 
-#b3 {
-  color: rgb(5, 85, 5) ;
+#man {
+  color: rgb(5, 85, 5);
+  grid-area: man;
+  justify-self: center;
 }
 
-#b2 {
-  position: relative;
-  right: 430px;
+#exp {
   color: rgb(9, 9, 209);
+  grid-area: exp;
+  justify-self: start;
+  margin-left: 0%;
 }
 
 .links {
